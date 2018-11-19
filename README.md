@@ -1,2 +1,2 @@
 # ImageJ-Fiji-macros
-My ImageJ Fiji macros created for the use of our facility or some specific questions
+Some ImageJ/Fiji macros created by me for facility use or to answer some general questions.
