@@ -93,10 +93,14 @@ ___
 
 ### quality_control_psf_analyser
    ```
-   latest version: v2.1.2
+   latest version: v2.1.3
    ```
 
    Workflow developed at the facility to more automatically and with less user interaction to automatically detect beads in the field of view and then measure their PSF FWHM using the MetroloJ plugin.
+
+   Changelog:
+
+      + v2.1.3 - added batch mode to speed up the process of duplicating beads and then measuring them.
 
 ### quality_control_coloc
    ```
