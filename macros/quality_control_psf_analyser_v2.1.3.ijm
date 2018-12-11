@@ -71,6 +71,7 @@ controlo();
 
 points = roiManager("count");
 selectWindow(title2);
+setBatchMode(true);
 for (i = 0; i < points ; i++) {
 	roiManager("Show All");
 	roiManager("Select", i);
@@ -165,6 +166,7 @@ for (i=0; i<nr; i++) {
 }
 print("Macro Done.");
 run("Close All");
+setBatchMode(false);
 
 function analisarParticulas () {
 	//Getting size of particles to analyze
