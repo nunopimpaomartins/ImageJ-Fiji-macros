@@ -152,7 +152,7 @@ for (i = 0; i < pontos ; i++) {
 	run("New... ", "name="+table_name+" type=Table");
 	print(table_name, "channel coord; x ; y; z;");
 	selectWindow("bead stack "+i);
-	
+
 	run("Split Channels");
 	for (j=1; j<=channels; j++) {
 		selectWindow("C"+j+"-bead stack "+i);
@@ -176,7 +176,7 @@ for (i = 0; i < pontos ; i++) {
 	if (chan4 != "None") {
 		chan_val_4 = newArray();
 	};
-	
+
 	selectWindow(chan1);
 	run("Select None");
 	run("Properties...", "unit=px pixel_width=1 pixel_height=1 voxel_depth=1");
@@ -195,7 +195,7 @@ for (i = 0; i < pontos ; i++) {
 	run("Analyze Particles...", "size=1-1500 pixel display clear slice");
 	z_1 = getResult("XM");
 	close("MAX_"+chan1);
-	
+
 	print(table_name, chan1+"; "+x_1+" ; "+y_1+" ; "+z_1);
 	chan_val_1 = Array.concat(chan_val_1, x_1);
 	chan_val_1 = Array.concat(chan_val_1, y_1);
@@ -220,7 +220,7 @@ for (i = 0; i < pontos ; i++) {
 	run("Analyze Particles...", "size=1-1500 pixel display clear slice");
 	z_2 = getResult("XM");
 	close("MAX_"+chan2);
-	
+
 	print(table_name, chan2+"; "+x_2+" ; "+y_2+" ; "+z_2);
 	chan_val_2 = Array.concat(chan_val_2, x_2);
 	chan_val_2 = Array.concat(chan_val_2, y_2);
@@ -244,7 +244,7 @@ for (i = 0; i < pontos ; i++) {
 	run("Analyze Particles...", "size=1-1500 pixel display clear slice");
 	z_3 = getResult("XM");
 	close("MAX_"+chan3);
-	
+
 	print(table_name, chan3+"; "+x_3+" ; "+y_3+" ; "+z_3);
 	chan_val_3 = Array.concat(chan_val_3, x_3);
 	chan_val_3 = Array.concat(chan_val_3, y_3);
@@ -261,7 +261,7 @@ for (i = 0; i < pontos ; i++) {
 		x_4 = getResult("XM");
 		y_4 = getResult("YM");
 		close("MAX_"+chan4);
-	
+
 		selectWindow(chan4);
 		run("Reslice [/]...", "output="+pixelSize+" start=Left rotate avoid");
 		run("Z Project...", "type=[Max Intensity]");
@@ -274,52 +274,52 @@ for (i = 0; i < pontos ; i++) {
 		chan_val_4 = Array.concat(chan_val_4, y_4);
 		chan_val_4 = Array.concat(chan_val_4, z_4);
 	};
-	
+
 
 	print(table_name, "raw dist px; x; y; z");
-	print(table_name, chan1+"vs"+chan2+"; "+chan_val_1[0]-chan_val_2[0]+"; "+chan_val_1[1]-chan_val_2[1]+"; "+chan_val_1[2]-chan_val_2[2]);
-	print(table_name, chan1+"vs"+chan3+"; "+chan_val_1[0]-chan_val_3[0]+"; "+chan_val_1[1]-chan_val_3[1]+"; "+chan_val_1[2]-chan_val_3[2]);
-	print(table_name, chan2+"vs"+chan3+"; "+chan_val_2[0]-chan_val_3[0]+"; "+chan_val_2[1]-chan_val_3[1]+"; "+chan_val_2[2]-chan_val_3[2]);
+	print(table_name, chan1+"vs"+chan2+"; "+(chan_val_1[0]-chan_val_2[0])+"; "+(chan_val_1[1]-chan_val_2[1])+"; "+(chan_val_1[2]-chan_val_2[2]));
+	print(table_name, chan1+"vs"+chan3+"; "+(chan_val_1[0]-chan_val_3[0])+"; "+(chan_val_1[1]-chan_val_3[1])+"; "+(chan_val_1[2]-chan_val_3[2]));
+	print(table_name, chan2+"vs"+chan3+"; "+(chan_val_2[0]-chan_val_3[0])+"; "+(chan_val_2[1]-chan_val_3[1])+"; "+(chan_val_2[2]-chan_val_3[2]));
 	if (chan4 != "None") {
-		print(table_name, chan1+"vs"+chan4+"; "+chan_val_1[0]-chan_val_4[0]+"; "+chan_val_1[1]-chan_val_4[1]+"; "+chan_val_1[2]-chan_val_4[2]);
-		print(table_name, chan2+"vs"+chan4+"; "+chan_val_2[0]-chan_val_4[0]+"; "+chan_val_2[1]-chan_val_4[1]+"; "+chan_val_2[2]-chan_val_4[2]);
-		print(table_name, chan3+"vs"+chan4+"; "+chan_val_3[0]-chan_val_4[0]+"; "+chan_val_3[1]-chan_val_4[1]+"; "+chan_val_3[2]-chan_val_4[2]);
+		print(table_name, chan1+"vs"+chan4+"; "+(chan_val_1[0]-chan_val_4[0])+"; "+(chan_val_1[1]-chan_val_4[1])+"; "+(chan_val_1[2]-chan_val_4[2]));
+		print(table_name, chan2+"vs"+chan4+"; "+(chan_val_2[0]-chan_val_4[0])+"; "+(chan_val_2[1]-chan_val_4[1])+"; "+(chan_val_2[2]-chan_val_4[2]));
+		print(table_name, chan3+"vs"+chan4+"; "+(chan_val_3[0]-chan_val_4[0])+"; "+(chan_val_3[1]-chan_val_4[1])+"; "+(chan_val_3[2]-chan_val_4[2]));
 	};
 
 	//euclidian distance 2d
 	print(table_name, "euclidian 2d ; px; um");
 	d1 = distance_2d(chan_val_1, chan_val_2);
-	print(table_name, chan1+" vs "+chan2+"; "+d1+" ; "+d1*pixelSize);
+	print(table_name, chan1+" vs "+chan2+"; "+d1+" ; "+(d1*pixelSize));
 	d2 = distance_2d(chan_val_1, chan_val_3);
-	print(table_name, chan1+" vs "+chan3+"; "+d2+" ; "+d2*pixelSize);
+	print(table_name, chan1+" vs "+chan3+"; "+d2+" ; "+(d2*pixelSize));
 	d4 = distance_2d(chan_val_2, chan_val_3);
-	print(table_name, chan2+" vs "+chan3+"; "+d4+" ; "+d4*pixelSize);
+	print(table_name, chan2+" vs "+chan3+"; "+d4+" ; "+(d4*pixelSize));
 	if (chan4 != "None") {
 		d3 = distance_2d(chan_val_1, chan_val_4);
-		print(table_name, chan1+" vs "+chan4+"; "+d3+" ; "+d3*pixelSize);
+		print(table_name, chan1+" vs "+chan4+"; "+d3+" ; "+(d3*pixelSize));
 		d5 = distance_2d(chan_val_2, chan_val_4);
-		print(table_name, chan2+" vs "+chan4+"; "+d5+" ; "+d5*pixelSize);
+		print(table_name, chan2+" vs "+chan4+"; "+d5+" ; "+(d5*pixelSize));
 		d6 = distance_2d(chan_val_3, chan_val_4);
-		print(table_name, chan3+" vs "+chan4+"; "+d6+" ; "+d6*pixelSize);
+		print(table_name, chan3+" vs "+chan4+"; "+d6+" ; "+(d6*pixelSize));
 	};
-	
+
 	//euclidian distance 3d
 	print(table_name, "euclidian 3d ; px; um");
 	d1 = distance_3d(chan_val_1, chan_val_2);
-	print(table_name, chan1+" vs "+chan2+"; "+d1+" ; "+d1*pixelSize);
+	print(table_name, chan1+" vs "+chan2+"; "+d1+" ; "+(d1*pixelSize));
 	d2 = distance_3d(chan_val_1, chan_val_3);
-	print(table_name, chan1+" vs "+chan3+"; "+d2+" ; "+d2*pixelSize);
+	print(table_name, chan1+" vs "+chan3+"; "+d2+" ; "+(d2*pixelSize));
 	d4 = distance_3d(chan_val_2, chan_val_3);
-	print(table_name, chan2+" vs "+chan3+"; "+d4+" ; "+d4*pixelSize);
+	print(table_name, chan2+" vs "+chan3+"; "+d4+" ; "+(d4*pixelSize));
 	if (chan4 != "None") {
 		d3 = distance_3d(chan_val_1, chan_val_4);
-		print(table_name, chan1+" vs "+chan4+"; "+d3+" ; "+d3*pixelSize);
+		print(table_name, chan1+" vs "+chan4+"; "+d3+" ; "+(d3*pixelSize));
 		d5 = distance_3d(chan_val_2, chan_val_4);
-		print(table_name, chan2+" vs "+chan4+"; "+d5+" ; "+d5*pixelSize);
+		print(table_name, chan2+" vs "+chan4+"; "+d5+" ; "+(d5*pixelSize));
 		d6 = distance_3d(chan_val_3, chan_val_4);
-		print(table_name, chan3+" vs "+chan4+"; "+d6+" ; "+d6*pixelSize);
+		print(table_name, chan3+" vs "+chan4+"; "+d6+" ; "+(d6*pixelSize));
 	};
-	
+
 	updateResults();
 	selectWindow(table_name_2);
 
@@ -489,17 +489,17 @@ if (chan4 != "None") {
 		x_value = parseFloat(fetch(file, chan1+"vs"+chan4, "x"));
 		x_array_3 = Array.concat(x_array_3, x_value);
 	};
-	
+
 	if (show_array == "Yes") {
 		Array.show(x_array_3);
 		saveAs("Results", save_dir+fs+x_array_3_name+".csv");
 		run("Close");
 	};
-	
+
 	Array.getStatistics(x_array_3, min, max, mean, stdDev);
 	print("Mean x: "+mean);
 	print("stdDev x: "+stdDev);
-	
+
 	//get y values
 	y_array_3 = newArray();
 	y_array_3_name = chan1+"_vs_"+chan4+"_y_values";
@@ -508,17 +508,17 @@ if (chan4 != "None") {
 		y_value = parseFloat(fetch(file, chan1+"vs"+chan4, "y"));
 		y_array_3 = Array.concat(y_array_3, y_value);
 	};
-	
+
 	if (show_array == "Yes") {
 		Array.show(y_array_3);
 		saveAs("Results", save_dir+fs+y_array_3_name+".csv");
 		run("Close");
 	};
-	
+
 	Array.getStatistics(y_array_3, min, max, mean, stdDev);
 	print("Mean y: "+mean);
 	print("stdDev y: "+stdDev);
-	
+
 	//get z values
 	z_array_3 = newArray();
 	z_array_3_name = chan1+"_vs_"+chan4+"_z_values";
@@ -527,13 +527,13 @@ if (chan4 != "None") {
 		z_value = parseFloat(fetch(file, chan1+"vs"+chan4, "z"));
 		z_array_3 = Array.concat(z_array_3, z_value);
 	};
-	
+
 	if (show_array == "Yes") {
 		Array.show(z_array_3);
 		saveAs("Results", save_dir+fs+z_array_3_name+".csv");
 		run("Close");
 	};
-	
+
 	Array.getStatistics(z_array_3, min, max, mean, stdDev);
 	print("Mean z: "+mean);
 	print("stdDev z: "+stdDev);
@@ -612,17 +612,17 @@ if (chan4 != "None") {
 		x_value = parseFloat(fetch(file, chan2+"vs"+chan4, "x"));
 		x_array_5 = Array.concat(x_array_5, x_value);
 	};
-	
+
 	if (show_array == "Yes") {
 		Array.show(x_array_5);
 		saveAs("Results", save_dir+fs+x_array_5_name+".csv");
 		run("Close");
 	};
-	
+
 	Array.getStatistics(x_array_5, min, max, mean, stdDev);
 	print("Mean x: "+mean);
 	print("stdDev x: "+stdDev);
-	
+
 	//get y values
 	y_array_5 = newArray();
 	y_array_5_name = chan2+"_vs_"+chan4+"_y_values";
@@ -631,17 +631,17 @@ if (chan4 != "None") {
 		y_value = parseFloat(fetch(file, chan2+"vs"+chan4, "y"));
 		y_array_5 = Array.concat(y_array_5, y_value);
 	};
-	
+
 	if (show_array == "Yes") {
 		Array.show(y_array_5);
 		saveAs("Results", save_dir+fs+y_array_5_name+".csv");
 		run("Close");
 	};
-	
+
 	Array.getStatistics(y_array_5, min, max, mean, stdDev);
 	print("Mean y: "+mean);
 	print("stdDev y: "+stdDev);
-	
+
 	//get z values
 	z_array_5 = newArray();
 	z_array_5_name = chan2+"_vs_"+chan4+"_z_values";
@@ -650,13 +650,13 @@ if (chan4 != "None") {
 		z_value = parseFloat(fetch(file, chan2+"vs"+chan4, "z"));
 		z_array_5 = Array.concat(z_array_5, z_value);
 	};
-	
+
 	if (show_array == "Yes") {
 		Array.show(z_array_5);
 		saveAs("Results", save_dir+fs+z_array_5_name+".csv");
 		run("Close");
 	};
-	
+
 	Array.getStatistics(z_array_5, min, max, mean, stdDev);
 	print("Mean z: "+mean);
 	print("stdDev z: "+stdDev);
@@ -674,17 +674,17 @@ if (chan4 != "None") {
 		x_value = parseFloat(fetch(file, chan3+"vs"+chan4, "x"));
 		x_array_7 = Array.concat(x_array_7, x_value);
 	};
-	
+
 	if (show_array == "Yes") {
 		Array.show(x_array_7);
 		saveAs("Results", save_dir+fs+x_array_7_name+".csv");
 		run("Close");
 	};
-	
+
 	Array.getStatistics(x_array_7, min, max, mean, stdDev);
 	print("Mean x: "+mean);
 	print("stdDev x: "+stdDev);
-	
+
 	//get y values
 	y_array_7 = newArray();
 	y_array_7_name = chan3+"_vs_"+chan4+"_y_values";
@@ -693,17 +693,17 @@ if (chan4 != "None") {
 		y_value = parseFloat(fetch(file, chan3+"vs"+chan4, "y"));
 		y_array_7 = Array.concat(y_array_7, y_value);
 	};
-	
+
 	if (show_array == "Yes") {
 		Array.show(y_array_7);
 		saveAs("Results", save_dir+fs+y_array_7_name+".csv");
 		run("Close");
 	};
-	
+
 	Array.getStatistics(y_array_7, min, max, mean, stdDev);
 	print("Mean y: "+mean);
 	print("stdDev y: "+stdDev);
-	
+
 	//get z values
 	z_array_7 = newArray();
 	z_array_7_name = chan3+"_vs_"+chan4+"_z_values";
@@ -712,13 +712,13 @@ if (chan4 != "None") {
 		z_value = parseFloat(fetch(file, chan3+"vs"+chan4, "z"));
 		z_array_7 = Array.concat(z_array_7, z_value);
 	};
-	
+
 	if (show_array == "Yes") {
 		Array.show(z_array_7);
 		saveAs("Results", save_dir+fs+z_array_7_name+".csv");
 		run("Close");
 	};
-	
+
 	Array.getStatistics(z_array_7, min, max, mean, stdDev);
 	print("Mean z: "+mean);
 	print("stdDev z: "+stdDev);
@@ -760,11 +760,11 @@ function get_value(t_dir, target_chan, n, mode) {
 		new_str_cor = substring(file, ind_green+7, ind_green+14);
 	};
 	//ind_end = indexOf(f, target_chan, ind_green);
-	
+
 	//new_str = substring(f, ind_green, ind_end);
 	//print(new_str);
 	//print(new_str_cor);
-	
+
 	green_val1 = substring(new_str_cor, 0, 3);
 	green_val2 = substring(new_str_cor, 5);
 	green_values = Array.concat(green_val1, green_val2);
@@ -780,7 +780,7 @@ function analisarParticulas () {
 	Dialog.show();
 	minSize = Dialog.getNumber();
 	maxSize = Dialog.getNumber();
-	
+
 	//recognize beads and name them
 	while (pontos == 0 ) {
 		run("Analyze Particles...", "size="+minSize+"-"+maxSize+" circularity=0.0-1.0 show=Nothing display exclude clear add slice");
@@ -814,7 +814,7 @@ function find_max () {
 	max = getResult("Max");
 	//print("Min: "+min);
 	//print("Max: "+max);
-	
+
 	//choose the highest signal slice
 	maior = true;
 	while (maior == true) {
