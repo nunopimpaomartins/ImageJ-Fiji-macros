@@ -142,7 +142,7 @@ for (i=0; i<nr; i++) {
 	c = indexOf(string, " µm", b);
 	value = substring(string, b+2, c); //The +2 is the gap until the value.
 	print("x "+i+": "+value);
-	File.append(value+"; ", dir+"log x.csv");
+	File.append(value+", ", dir+"log x.csv");
 }
 
 //fetch y values
@@ -152,7 +152,7 @@ for (i=0; i<nr; i++) {
 	c = indexOf(string, " µm", b);
 	value = substring(string, b+2, c);
 	print("y "+i+": "+value);
-	File.append(value+"; ", dir+"log y.csv");
+	File.append(value+", ", dir+"log y.csv");
 }
 
 //fetch z values
@@ -162,7 +162,7 @@ for (i=0; i<nr; i++) {
 	c = indexOf(string, " µm", b);
 	value = substring(string, b+2, c);
 	print("z "+i+": "+value);
-	File.append(value+"; ", dir+"log z.csv");
+	File.append(value+", ", dir+"log z.csv");
 }
 print("Macro Done.");
 run("Close All");
