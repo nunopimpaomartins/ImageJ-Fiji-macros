@@ -109,16 +109,6 @@ ___
 
    Macro developed at the facility to more automatically and with less user interaction check the chromatic shift between multicolor beads and retrieve an average to be used for chromatic shift correction created by the illumination or the microscope itself.
 
-#### Changelog:
-
-   v0.8:
-
-   + It can now run a minimum of 2 channels and a maximum of 4.
-   + Rewrote code for difference and calculations between channels for a more automated manner.
-   + Rewrote code for value concatenation and summary.
-   + Added incrementation to csv tables of each bead when saving.
-   + Saves as csv with comma separation instead of semicolon.
-
 ### batch_zprojection
 
    Script that allows to do a batch macro of all the files inside a folder with the same extension (.dv, .tif, etc.) and up to 3 channels. It allows the user to chose which type of projection he wants to do and saves every channel as a tiff file and a RGB overlay image of all channels for faster checking.
