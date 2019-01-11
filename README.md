@@ -113,11 +113,11 @@ ___
 
    v0.8:
 
-      + It can now run a minimum of 2 channels and a maximum of 4.
-      + Rewrote code for difference and calculations between channels for a more automated manner.
-      + Rewrote code for value concatenation and summary.
-      + Added incrementation to csv tables of each bead when saving.
-      + Saves as csv with comma separation instead of semicolon.
+   + It can now run a minimum of 2 channels and a maximum of 4.
+   + Rewrote code for difference and calculations between channels for a more automated manner.
+   + Rewrote code for value concatenation and summary.
+   + Added incrementation to csv tables of each bead when saving.
+   + Saves as csv with comma separation instead of semicolon.
 
 ### batch_zprojection
 
