@@ -21,7 +21,6 @@ if (nImages == 0) {
 	Dialog.show;
 	q = Dialog.getRadioButton();
 	loci = Dialog.getRadioButton();
-	//q = getBoolean("Open image?");
 	if (q == "Yes") {
 		if(loci == "Yes") {
 			print("Opening new image with Bio-formats");
@@ -32,16 +31,13 @@ if (nImages == 0) {
 		}
 	};
 	dir = File.directory;
-	//print("dir from file.directory");
 } else if(nImages == 1) {
 	dir = getInfo("image.directory");
-	//print("dir from getInfo");
-}
+};
 
 filename = getTitle();
 title = File.nameWithoutExtension();
 selectWindow(filename);
-//dir = File.directory;
 print("Image Dir: "+dir);
 print("File: "+filename);
 print("Title: "+title);
@@ -114,20 +110,6 @@ if (folders == "No") {
 	print("Saving to: "+save_dir);
 };
 
-/*if (chan1 == chan2 || chan1 == chan3 || chan1 == chan4 || chan2 == chan3 || chan2 == chan4 || chan3 == chan4) {
-	exit("You cannot have 2 equal channels!");
-};*/
-
-/*
-if (chan_number > 3) {
-	Stack.setChannel(1);
-	print("Setting channel 1 to initialize.");
-} else {
-	Stack.setChannel(0);
-	print("Setting channel 0 to initialize.");
-};
-*/
-
 selectWindow(filename);
 run("Z Project...", "projection=[Max Intensity]");
 //find_max();
@@ -159,7 +141,6 @@ for (i = 0; i < beads ; i++) {
 	roiManager("Rename", "bead"+(i));
 	run("Enlarge...", "enlarge=5 pixel");
 	run("Duplicate...", "title=[bead stack "+IJ.pad(i, num_length)+"] duplicate");
-	//selectWindow(title);
 	table_name = "[bead_coord_list_bead_"+IJ.pad(i, num_length)+"]";
 	table_name_2 = "bead_coord_list_bead_"+IJ.pad(i, num_length);
 	run("New... ", "name="+table_name+" type=Table");
@@ -207,32 +188,20 @@ for (i = 0; i < beads ; i++) {
 		print(table_name, window_array[k]+", "+x+", "+y+", "+z);
 		values = ""+x+"; "+y+"; "+z;
 		value_array = Array.concat(value_array, values);
-		//Array.show(value_array);
 	};
 
-	fac1 = factorialize(chan_number);
-	fac2 = factorialize(2);
-	fac3 = factorialize(chan_number-2);
-	combinations=fac1/(fac2*fac3);
-	//print("Combinations of channels: "+combinations);
-
-	counter = 0;
 	print(table_name, "raw dist px, x, y, z");
-	//while(counter<combinations){
 	for(l=1;l<window_array.length;l++){
 		for(o=0;o<l;o++){
 			channel_1=newArray();
 			channel_2=newArray();
 			channel_1 = split(value_array[o], ";");
-			//Array.show(channel_1);
 			channel_2 = split(value_array[l], ";");
 
 			//pixel shift
 			print(table_name, window_array[o]+"vs"+window_array[l]+", "+(parseFloat(channel_1[0])-parseFloat(channel_2[0]))+", "+(parseFloat(channel_1[1])-parseFloat(channel_2[1]))+", "+(parseFloat(channel_1[2])-parseFloat(channel_2[2])));
 		};
 	};
-	//	counter+=1;
-	//};
 
 	//euclidian distance calculation in 2d
 	print(table_name, "euclidian 2d, px, um");
@@ -241,7 +210,6 @@ for (i = 0; i < beads ; i++) {
 			channel_1=newArray();
 			channel_2=newArray();
 			channel_1 = split(value_array[o], ";");
-			//Array.show(channel_1);
 			channel_2 = split(value_array[l], ";");
 
 			d1=distance_2d(channel_1, channel_2);
@@ -285,20 +253,14 @@ for (i = 0; i < beads ; i++) {
 	print(table_name, "\\Close");
 };
 setBatchMode(false);
-//list = getFileList(save_dir);
-//print(list.length);
 
 /////////////////////////////////////////////////////////////////////
 //////////////Retrieve values from calculated differences////////////
-//////////////uses fetch function////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-//print("\nDAPI vs GFP");
 print("\n---------------------------------");
 print("Summary and Concatenated values");
 
 table_list = getFileList(save_dir);
-//print(table_list.length);
-//Array.show(table_list);
 
 for(l=1;l<window_array.length;l++) {
 	for(o=0;o<l;o++){
@@ -312,7 +274,6 @@ for(l=1;l<window_array.length;l++) {
 		content_array_z=newArray();
 		content_array_z_name = chan1+"vs"+chan2+"_z_values";
 		for(q=0;q<table_list.length;q++){
-			//print(table_list[q]);
 			table=File.openAsString(save_dir+fs+table_list[q]);
 			x_value = parseFloat(fetch(table, chan1+"vs"+chan2, "x"));
 			content_array_x = Array.concat(content_array_x, x_value);
@@ -393,16 +354,10 @@ function get_value(t_dir, target_chan, n, mode) {
 		ind_green = indexOf(f, "\nRed", ind);
 		new_str_cor = substring(file, ind_green+7, ind_green+14);
 	};
-	//ind_end = indexOf(f, target_chan, ind_green);
-
-	//new_str = substring(f, ind_green, ind_end);
-	//print(new_str);
-	//print(new_str_cor);
 
 	green_val1 = substring(new_str_cor, 0, 3);
 	green_val2 = substring(new_str_cor, 5);
 	green_values = Array.concat(green_val1, green_val2);
-	//Array.show(green_values);
 	return green_values;
 };
 
