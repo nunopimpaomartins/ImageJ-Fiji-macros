@@ -79,7 +79,7 @@ ___
 
 ### lif_to_tif
    ```
-   latest version: v1.8
+   latest version: v1.9
    ```
 
    A macro initially done to batch convert and save all the series inside a LIF (Leica) file into separate TIF or OME TIF files. It can convert more file types as ND(MetaMorph) or ND2 (Nikon NIS Elements). Can batch convert all files inside a folder.
