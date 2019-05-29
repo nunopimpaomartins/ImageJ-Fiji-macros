@@ -4,7 +4,7 @@
  * where we can choose between saving as tif or ome.tif (later using Bio-formats exporter)
  * autor: Nuno Pimpão Martins
  * IGC 2015-2018
- * 
+ *
  * changelog at the end of the file.
  */
 
@@ -24,7 +24,7 @@ if (batch == true){
 	if (endsWith(directory, "\\")==true) {
 		directory = substring(directory, 0, lengthOf(directory)-1);
 	};
-	
+
 	series_array = newArray();
 	total_series = 0;
 	images = 0;
@@ -37,7 +37,7 @@ if (batch == true){
 			images += 1;
 		};
 	};
-	
+
 	Dialog.create("Lif to Tiff (Batch Mode)");
 	Dialog.addMessage("Check destination save folder and format.");
 	Dialog.addMessage("Parent folder: "+directory);
@@ -61,12 +61,12 @@ if (batch == true){
 			} else if(endsWith(filename, ".nd2") == true) {
 				title = substring(filename, 0, indexOf(filename, ".nd2"));
 			};
-	
+
 			File.makeDirectory(directory+fs+title+" "+format+fs);
 			save_dir = directory+fs+title+" "+format+fs;
 			print("Save directory: "+save_dir);
 
-			
+
 			if (nImages < 1) {
 				Ext.setId(directory+fs+filelist[k]);
 				Ext.getSeriesCount(seriesCount);
@@ -97,10 +97,10 @@ if (batch == true){
 	Ext.setId(file);
 	Ext.getSeriesCount(seriesCount);
 	print("Number of Series: "+seriesCount);
-	
+
 	directory = File.directory;
 	filename = File.nameWithoutExtension;
-	
+
 	Dialog.create("Lif to Tiff");
 	Dialog.addMessage("Check original folder and destination save folder to convert files.");
 	Dialog.addMessage("Filename: "+filename);
@@ -112,17 +112,17 @@ if (batch == true){
 	Dialog.show();
 	save_dir_name = Dialog.getString();
 	format = Dialog.getChoice();
-	
+
 	if (endsWith(directory, "\\")==true) {
 		directory = substring(directory, 0, lengthOf(directory)-1);
 	};
-	
+
 	File.makeDirectory(directory+fs+save_dir_name+" "+format+" series");
 	save_dir = directory+fs+filename+" "+format+" series";
 	print("Parent directory:"+directory);
 	print("Saving format: "+format);
 	print("Save directory: "+save_dir);
-	
+
 	if (nImages < 1) {
 		for (i=1; i <= seriesCount; i++) {
 			run("Bio-Formats Importer", "open=["+file+"] autoscale color_mode=Default view=Hyperstack stack_order=XYCZT series_"+i+"");
@@ -150,30 +150,32 @@ setBatchMode(false);
 
 function charPurge(string) {
 	string = toLowerCase(string);
-	while(indexOf(string, "(")>=0 || indexOf(string, ")") >= 0 || indexOf(string, "/") >= 0 || indexOf(string, "\\") >= 0 || indexOf(string, "\"")>=0 ) {
+	while(indexOf(string, "(")>=0 || indexOf(string, ")") >= 0 || indexOf(string, "/") >= 0 || indexOf(string, "\\") >= 0 || indexOf(string, "\"")>=0 || indexOf(string, " ")>=0) {
 		if (indexOf(string, "(")>=0) {
-			string = replace(string, "(", " ");
+			string = replace(string, "(", "_");
 		} else if (indexOf(string, ")")>=0) {
-			string = replace(string, ")", " ");
+			string = replace(string, ")", "_");
 		} else if (indexOf(string, "\\")>=0) {
-			string = replace(string, "\\", " ");
+			string = replace(string, "\\", "_");
 		} else if (indexOf(string, "/")>=0) {
-			string = replace(string, "/", " ");
+			string = replace(string, "/", "_");
 		} else if (indexOf(string, "\"")>=0) {
-			string = replace(string, "\"", " ");
+			string = replace(string, "\"", "_");
+		} else if (indexOf(string, " ")>=0) {
+			string = replace(string, " ", "_");
 		};
 	};
 	while(indexOf(string, ".tif")>=0 || indexOf(string, ".tiff") >= 0 || indexOf(string, ".lif") >= 0 || indexOf(string, ".nd") >= 0 || indexOf(string, ".nd2")>=0 ) {
 		if (indexOf(string, ".tif")>=0) {
-			string = replace(string, ".tif", " ");
+			string = replace(string, ".tif", "_");
 		} else if (indexOf(string, ".tiff") >=0) {
-			string = replace(string, ".tiff", " ");
+			string = replace(string, ".tiff", "_");
 		} else if (indexOf(string, ".lif")>=0) {
-			string = replace(string, ".lif", " ");
+			string = replace(string, ".lif", "_");
 		} else if (indexOf(string, ".nd") >=0) {
-			string = replace(string, ".nd", " ");
+			string = replace(string, ".nd", "_");
 		} else if (indexOf(string, ".nd2") >= 0) {
-			string = replace(string, ".nd2", " ");
+			string = replace(string, ".nd2", "_");
 		};
 	};
 	return string;
@@ -182,6 +184,7 @@ function charPurge(string) {
 /*
  * Changelog
  * --
+ * 2019-05-28 v1.9: Replaced all blank spaces by underscores.
  * 2018-05-08 v1.8: Added batch file conversion mode.
  * 2018-04-27 v1.7: Added zero (0) padding to save file name. To prevent problems with stitching.
  * 2017-07-26 v1.6:
