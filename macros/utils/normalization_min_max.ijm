@@ -1,50 +1,35 @@
+/*
+* Macro to normalize images with Rescaling or Min-Max normalization
+* User can set new min and max values.
+* follows the formula of min-max normalization by rescaling
+* Inorm = (I - min) * ( newmax - newmin ) / (max - min)) + newmin
+* Author: Nuno Pimpão Martins
+*/
 print("\\Clear");
-title = getTitle();
-//getMinAndMax(min, max);
-getStatistics(area, mean, min, max, std, histogram);
-print("Min: "+min+" Max: "+max);
-normalize_mi_ma(title);
-getStatistics(area, mean, min, max, std, histogram);
-print("Min: "+min+" Max: "+max);
 
-function normalize_mi_ma(x){
-	//Min Max normalization between [0,1]
-	min_new = 0;
-	max_new = 4095;
-	selectWindow(x);
+function normalize_mi_ma(image, newMin, newMax){
+	//Min Max normalization between [newMin, newMax]
+	selectWindow(image);
 	if(bitDepth() == 24){
 		exit("Does not work with RGB images");
 	} else if(bitDepth()!=32){
 		run("32-bit");
 	};
-	getStatistics(area, mean, min, max, std, histogram);
-	getDimensions(width, height, channels, slices, frames);
-	for(i=0;i<width;i++){
-		for(j=0;j<height;j++){
-			px_value = getPixel(i, j);
-			px_nom = (px_value - min) * max_new / (max - min) + min_new;
-			setPixel(i, j, px_nom);
-		}
-	}
+	
+	Stack.getStatistics(voxelCount, mean, min, max, stdDev)
+	dividend = newMax - newMin;
+	divisor = max - min;
+	factor = dividend / divisor;
+
+	run("Subtract...", "value="+min+" stack");
+	run("Multiply...", "value="+factor+" stack");
+	run("Add...", "value="+newMin+" stack");
 }
 
-function normalize_standardization(x){
-	/*
-	 * x - image to be standardized
-	 */
-	 selectWindow(x);
-	 if(bitDepth() == 24){
-	 	exit("Does not work with RGB images");
-	 } else if(bitDepth()!=32){
-	 	run("32-bit");
-	 };
-	 getStatistics(area, mean, min, max, std, histogram);
-	 getDimensions(width, height, channels, slices, frames);
-	 for(i=0;i<=width;i++){
-	 	for(j=0;j<height;j++){
-	 		px_value = getPixel(i, j);
-	 		px_norm = (px_value-mean)/std;
-	 		setPixel(i, j, px_norm);
-	 	}
-	 }
-}
+title = getTitle();
+getStatistics(area, mean, min, max, std, histogram);
+print("Min: "+min+" Max: "+max);
+normalize_mi_ma(title);
+getStatistics(area, mean, min, max, std, histogram);
+print("Min: "+min+" Max: "+max);
+print("Done");
