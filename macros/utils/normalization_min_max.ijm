@@ -29,7 +29,7 @@ function normalize_mi_ma(image, newMin, newMax){
 title = getTitle();
 getStatistics(area, mean, min, max, std, histogram);
 print("Min: "+min+" Max: "+max);
-normalize_mi_ma(title);
+normalize_mi_ma(title, 0, 1);
 getStatistics(area, mean, min, max, std, histogram);
 print("Min: "+min+" Max: "+max);
 print("Done");
