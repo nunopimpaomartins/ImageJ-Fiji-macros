@@ -10,26 +10,29 @@ print("\\Clear");
 function normalize_mi_ma(image, newMin, newMax){
 	//Min Max normalization between [newMin, newMax]
 	selectWindow(image);
+	Stack.getDimensions(width, height, channels, slices, frames);
+	if(channels > 1){
+		exit("Does not work with multi-channel images");
+	};
+
 	if(bitDepth() == 24){
 		exit("Does not work with RGB images");
 	} else if(bitDepth()!=32){
 		run("32-bit");
 	};
-	
+
 	Stack.getStatistics(voxelCount, mean, min, max, stdDev)
-	dividend = newMax - newMin;
-	divisor = max - min;
-	factor = dividend / divisor;
+	factor = (newMax - newMin) / (max - min);
 
 	run("Subtract...", "value="+min+" stack");
 	run("Multiply...", "value="+factor+" stack");
 	run("Add...", "value="+newMin+" stack");
-}
+};
 
 title = getTitle();
-getStatistics(area, mean, min, max, std, histogram);
-print("Min: "+min+" Max: "+max);
+Stack.getStatistics(img_voxelCount, img_mean, img_min, img_max, img_stdDev)
+print("Min: "+img_min+" Max: "+img_max);
 normalize_mi_ma(title, 0, 1);
-getStatistics(area, mean, min, max, std, histogram);
-print("Min: "+min+" Max: "+max);
+Stack.getStatistics(img_voxelCount, img_mean, img_min, img_max, img_stdDev)
+print("Min: "+img_min+" Max: "+img_max);
 print("Done");
